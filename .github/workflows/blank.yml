@@ -26,8 +26,8 @@ jobs:
               "value": {
                 "enabled": true,
                 "generalProperties": {
-                  "name": "Testing API",
-                  "description": "Terraform test execution 6th time",
+                  "name": "Testing Github",
+                  "description": "By DXC Developers",
                   "maintenanceType": "PLANNED",
                   "suppression": "DETECT_PROBLEMS_AND_ALERT",
                   "disableSyntheticMonitorExecution": true
