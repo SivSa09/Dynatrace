@@ -1,0 +1,54 @@
+name: API Call Example for Dynatrace
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  make-api-call:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code (optional, if needed for your workflow)
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Make the PUT request to Dynatrace API
+      - name: Make a PUT request to Dynatrace API
+        run: |
+          curl -X 'PUT' \
+            'https://elg31034.live.dynatrace.com/api/v2/settings/objects/vu9U3hXa3q0AAAABACNidWlsdGluOmFsZXJ0aW5nLm1haW50ZW5hbmNlLXdpbmRvdwAGdGVuYW50AAZ0ZW5hbnQAJGJlNzc1ZDc1LWY2MGMtM2UzNS1iNmM3LTRkZDZjZDQ4YzllOL7vVN4V2t6t?validateOnly=false&adminAccess=false' \
+            -H 'accept: application/json; charset=utf-8' \
+            -H 'Authorization: Api-Token ${{ secrets.DYNATRACE_API_TOKEN }}' \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d '{
+              "value": {
+                "enabled": true,
+                "generalProperties": {
+                  "name": "Testing API",
+                  "description": "Terraform test execution 6th time",
+                  "maintenanceType": "PLANNED",
+                  "suppression": "DETECT_PROBLEMS_AND_ALERT",
+                  "disableSyntheticMonitorExecution": true
+                },
+                "schedule": {
+                  "scheduleType": "ONCE",
+                  "onceRecurrence": {
+                    "startTime": "2025-02-05T20:00:00",
+                    "endTime": "2025-02-07T21:30:00",
+                    "timeZone": "Asia/Calcutta"
+                  }
+                },
+                "filters": [
+                  {
+                    "entityTags": [
+                      "Datacenter:pdc"
+                    ],
+                    "managementZones": [
+                      "vu9U3hXa3q0AAAABABhidWlsdGluOm1hbmFnZW1lbnQtem9uZXMABnRlbmFudAAGdGVuYW50ACRkN2I1YWE3ZS01YTcwLTM1ZjUtYmFkOS0wMjAwOGU0ZTgwNTm-71TeFdrerQ"
+                    ]
+                  }
+                ]
+              }
+            }'
